@@ -1,6 +1,10 @@
+import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginBlocCubit.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/auth/register/RegisterBlocCubit.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/register/RegisterPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: FToastBuilder(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -19,10 +24,15 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'login',
       routes: {
-        'login': (BuildContext context) => const LoginPage(),
-        'register': (BuildContext context) => const RegisterPage(),
+        'login': (BuildContext context) => BlocProvider(
+              create: (_) => LoginBlocCubit(),
+              child: const LoginPage(),
+          ),
+        'register': (BuildContext context) => BlocProvider(
+              create: (_) => RegisterBlocCubit(),
+              child: const RegisterPage(),
+          ),
       },
     );
   }
 }
-
