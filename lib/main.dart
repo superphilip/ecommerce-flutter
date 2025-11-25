@@ -1,38 +1,63 @@
-import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginBlocCubit.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/auth/login/LoginPage.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/auth/register/RegisterBlocCubit.dart';
-import 'package:ecommerce_flutter/src/presentation/pages/auth/register/RegisterPage.dart';
+
+import 'package:ecommerce_flutter/injection.dart';
+import 'package:ecommerce_flutter/src/blocProviders.dart';
+import 'package:ecommerce_flutter/src/config/AppRouter.dart';
+import 'package:ecommerce_flutter/src/services/DeepLinkService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-void main() {
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+late DeepLinkService deepLinkService;
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
+  deepLinkService = DeepLinkService(navigatorKey: navigatorKey);
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
+
+  @override
+  void initState() {
+    super.initState();
+    deepLinkService.initDeepLinks();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    deepLinkService.dispose();
+  }
+  
+
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: FToastBuilder(),
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return MultiBlocProvider(
+      providers: blocProviders,
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        builder: FToastBuilder(),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        initialRoute: AppRouter.loginRoute,
+        onGenerateRoute: AppRouter.onGenerateRoute,
       ),
-      initialRoute: 'login',
-      routes: {
-        'login': (BuildContext context) => BlocProvider(
-              create: (_) => LoginBlocCubit(),
-              child: const LoginPage(),
-          ),
-        'register': (BuildContext context) => BlocProvider(
-              create: (_) => RegisterBlocCubit(),
-              child: const RegisterPage(),
-          ),
-      },
     );
   }
 }

@@ -10,12 +10,15 @@ class DefaultIconBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(top: top, left: left),
-      child: IconButton(
-        onPressed: onPressed ?? () => Navigator.pop(context),
-        icon: Icon(Icons.arrow_back_ios, size: 35, color: Colors.white),
+    return Positioned(
+      left: left,
+      top: top,
+      child: Container(
+        alignment: Alignment.topLeft,
+        child: IconButton(
+          onPressed: onPressed ?? () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back_ios, size: 35, color: Colors.white),
+        ),
       ),
     );
   }

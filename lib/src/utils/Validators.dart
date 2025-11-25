@@ -38,7 +38,8 @@ class Validators {
   }
 
 
-  String? passwordValidator(String? password) {
+  String? 
+  passwordValidator(String? password) {
     if (password == null || password.isEmpty) {
       return kTextVacio;
     }
