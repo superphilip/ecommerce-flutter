@@ -21,12 +21,23 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   void initState() {
     super.initState();
-    final notificationToken = widget.notificationToken;
-    print(notificationToken);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _bloc = BlocProvider.of<ResetPasswordBloc>(context);
+      final token = widget.notificationToken?.trim();
 
-    if (notificationToken != null && notificationToken.isNotEmpty) {
-      _bloc?.add(ResetPasswordSetNotificationToken(notificationToken: notificationToken));
-    }
+      print('ResetPasswordPage - postFrame token: "$token"');
+
+      if (token != null && token.isNotEmpty) {
+        _bloc!.add(ResetPasswordSetNotificationToken(notificationToken: token));
+      } else {
+        final args = ModalRoute.of(context)?.settings.arguments;
+        if (args is String && args.trim().isNotEmpty) {
+          _bloc!.add(
+            ResetPasswordSetNotificationToken(notificationToken: args.trim()),
+          );
+        }
+      }
+    });
   }
 
   @override
@@ -84,9 +95,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   );
                 }
                 return Column(
-                  children: [
-                    ResetPasswordContent(_bloc, state, _formKey),
-                  ],
+                  children: [ResetPasswordContent(_bloc, state, _formKey)],
                 );
               },
             ),
