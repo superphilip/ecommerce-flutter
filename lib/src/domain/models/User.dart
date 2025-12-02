@@ -8,7 +8,6 @@ class User {
   String? phone;
   String? password;
   String? image; // 🔑 String nullable
-  String? notificationToken; // 🔑 String nullable
   bool? estado;
   List<Role>? roles; // 🔑 Lista nullable
 
@@ -20,7 +19,6 @@ class User {
     this.phone,
     this.password,
     this.image,
-    this.notificationToken,
     this.estado,
     this.roles,
   });
@@ -33,7 +31,6 @@ class User {
     phone: json["phone"] ?? '',
     password: json["password"] ?? '',
     image: json["image"] ?? '',
-    notificationToken: json["notificationToken"] ?? '',
     estado: json["estado"] ?? true,
     roles: json["roles"] != null
         ? List<Role>.from(json["roles"].map((x) => Role.fromJson(x)))
@@ -48,7 +45,6 @@ class User {
     "phone": phone,
     "password": password,
     "image": image,
-    "notificationToken": notificationToken,
     "estado": estado,
     "roles": roles != null
         ? List<dynamic>.from(roles!.map((x) => x.toJson()))
@@ -63,7 +59,6 @@ class User {
       'phone': phone,
       'password': password,
       "image": image,
-      "notificationToken": notificationToken,
       "estado": estado,
       "roles": roles != null
           ? List<dynamic>.from(roles!.map((x) => x.toJson()))

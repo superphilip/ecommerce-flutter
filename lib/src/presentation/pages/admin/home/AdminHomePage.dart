@@ -29,9 +29,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Menu Admin'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
-        foregroundColor: Colors.white,
+        foregroundColor: Colors.black,
       ),
       drawer: BlocBuilder<AdminHomeBloc, AdminHomeState>(
         builder: (context, state) {

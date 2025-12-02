@@ -1,4 +1,9 @@
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/create/AdminCategoryCreatePage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/category/update/AdminCategoryUpdatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/admin/home/AdminHomePage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/create/AdminProductCreatePage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/list/AdminProductListPage.dart';
+import 'package:ecommerce_flutter/src/presentation/pages/admin/product/update/AdminProductUpdatePage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/acountblock/AcountBlockPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/activesessions/ActiveSessionesPage.dart';
 import 'package:ecommerce_flutter/src/presentation/pages/auth/confirmaccount/ConfirmAccountPage.dart';
@@ -29,6 +34,11 @@ class AppRouter {
     static const String activeSessionsRoute = '/auth/activesessions';
     static const String resendCodeRoute = 'auth/resendcode';
     static const String forgotPasswordRoute = 'auth/forgot-password';
+    static const String adminCategoryCreateRoute = '/admin/category/create';
+    static const String adminCategoryUpdateRoute = '/admin/category/update';
+    static const String adminProductListRoute = '/admin/product/list';
+    static const String adminProductCreateRoute = '/admin/product/create';
+    static const String adminProductUpdateRoute = '/admin/product/update';
 
 
     static Map<String, WidgetBuilder> getRoutes() {
@@ -46,8 +56,12 @@ class AppRouter {
             activeSessionsRoute: (context) => const ActiveSessionsPage(),
             resendCodeRoute: (context) => const ResendCodePage(),
             forgotPasswordRoute: (context) => const ForgotPasswordPage(),
-
             resetPasswordRoute: (context) => ResetPasswordPage(notificationToken: null),
+            adminCategoryCreateRoute: (context) => const AdminCategoryCreatePage(),
+            adminCategoryUpdateRoute: (context) => const AdminCategoryUpdatePage(),
+            adminProductListRoute: (context) => const AdminProductListPage(),
+            adminProductCreateRoute: (context) => const AdminProductCreatePage(),
+            adminProductUpdateRoute: (context) => const AdminProductUpdatePage(),
         };
     }
 
@@ -61,6 +75,7 @@ class AppRouter {
 
             return MaterialPageRoute(
                 builder: (context) => ResetPasswordPage(notificationToken: notificationToken),
+                settings: settings,
             );
         }
         
@@ -68,7 +83,7 @@ class AppRouter {
         final builder = routes[settings.name];
 
         if (builder != null) {
-            return MaterialPageRoute(builder: builder);
+            return MaterialPageRoute(builder: builder, settings: settings);
         }
 
         return null;

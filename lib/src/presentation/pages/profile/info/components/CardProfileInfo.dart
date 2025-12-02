@@ -1,3 +1,4 @@
+import 'package:ecommerce_flutter/src/config/AppRouter.dart';
 import 'package:ecommerce_flutter/src/domain/models/User.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,10 @@ class CardProfileInfo extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: FloatingActionButton(
                 backgroundColor: Colors.black,
-                onPressed: () => Navigator.pushNamed(context, 'profile/update', arguments: user),
+                onPressed: () {
+                  print('NAV: user -> $user');
+                  Navigator.pushNamed(context, AppRouter.profileUpdateRoute, arguments: user);
+                },
                 child: Icon(
                   Icons.edit,
                   color: Colors.white,
